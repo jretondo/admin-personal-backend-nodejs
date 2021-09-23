@@ -22,10 +22,22 @@ const npmFunct = (folderPath, options) => {
     console.log(`npm ${options}`, `${pull.stderr}`);
 }
 
+const npmInstall = (folderPath, options) => {
+    const args = [
+        "install",
+    ];
+    const pull = spawnSync("npm", args, { cwd: folderPath });
+    console.log(`npm ${options}`, `${pull.stderr}`);
+}
+
 const deployment = async (folderProyect, branch) => {
 
     const pathDirectoryProd = path.join(__dirname, "..", folderProyect, branch);
+
+    console.log(`pathDirectoryProd`, pathDirectoryProd);
+
     gitPull(pathDirectoryProd);
+    npmInstall(pathDirectoryProd);
     npmFunct(pathDirectoryProd, "stop");
     npmFunct(pathDirectoryProd, "purge");
     npmFunct(pathDirectoryProd, "build");
