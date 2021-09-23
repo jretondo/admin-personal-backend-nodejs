@@ -1,11 +1,11 @@
 const { spawnSync } = require('child_process');
 const path = require('path');
 
-const gitPull = (folderPath) => {
+const gitPull = (folderPath, branch) => {
     const args = [
         "pull",
         "origin",
-        "main",
+        branch,
         "--progress"
     ];
     const pull = spawnSync("git", args, { cwd: folderPath });
@@ -46,9 +46,12 @@ const deployment = (folderProyect, branch) => {
     const pathDirectoryProd = path.join(__dirname, "..", "..", "..", "..", folderProyect, branch);
 
     console.log(`pathDirectoryProd`, pathDirectoryProd);
-
+    let rama = "main";
+    if (branch === "test") {
+        rama = "dev"
+    }
     try {
-        gitPull(pathDirectoryProd);
+        gitPull(pathDirectoryProd, rama);
         npmInstall(pathDirectoryProd);
         npmFunct(pathDirectoryProd, "stop");
         npmFunct(pathDirectoryProd, "purge");

@@ -11,6 +11,7 @@ const auth = require('./components/auth/network')
 const routes = require('./components/routes/network')
 const invoice = require('./components/invoice/network')
 const deployment = require('./components/deployment/network')
+const test = require("./components/test")
 const swaggerUi = require('swagger-ui-express')
 const swaggerDoc = require('./swagger.json')
 
@@ -20,6 +21,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //ROUTER
+app.use('/api', test)
 app.use('/api/user', user)
 app.use('/api/auth', auth)
 app.use('/api/routes', routes)
