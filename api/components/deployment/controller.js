@@ -16,8 +16,10 @@ module.exports = (injectedStore) => {
         return store.get(TABLA, id)
     }
 
-    const deploy = (folderProyect, branch) => {
-        return deployment(folderProyect, branch)
+    const deploy = async (folderProyect, branch) => {
+        return new Promise((resolve, reject) => {
+            resolve(deployment(folderProyect, branch))
+        })
     }
 
     return {
