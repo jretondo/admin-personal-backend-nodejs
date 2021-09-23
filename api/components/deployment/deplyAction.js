@@ -43,7 +43,7 @@ const npmInstall = (folderPath) => {
 
 const deployment = (folderProyect, branch) => {
 
-    const pathDirectoryProd = path.join(__dirname, "..", "..", "..", "..", folderProyect);
+    const pathDirectoryProd = path.join(__dirname, "..", "..", "..", "..", folderProyect, branch);
 
     console.log(`pathDirectoryProd`, pathDirectoryProd);
 
