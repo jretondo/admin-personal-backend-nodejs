@@ -42,7 +42,6 @@ const deployment = (folderProyect, branch) => {
     npmFunct(pathDirectoryProd, "purge");
     npmFunct(pathDirectoryProd, "build");
     npmFunct(pathDirectoryProd, "start");
-    return 'Todo Ok'
 
 };
 
