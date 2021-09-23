@@ -17,6 +17,7 @@
   "author": "Retondo Javier",
   "license": "MIT",
   "dependencies": {
+    "@afipsdk/afip.js": "^0.7.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "ejs": "^3.1.6",

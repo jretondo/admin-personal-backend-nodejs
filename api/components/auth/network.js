@@ -25,7 +25,7 @@ const changePass = (req, res, next) => {
 }
 
 //Routes
-router.post("/login", login)
-router.put("/changePass", secure(), changePass)
+router.post("/", login)
+router.put("/", secure(), changePass)
 
 module.exports = router
