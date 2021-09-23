@@ -30,7 +30,7 @@ const npmInstall = (folderPath, options) => {
     console.log(`npm ${options}`, `${pull.stderr}`);
 }
 
-const deployment = async (folderProyect, branch) => {
+const deployment = (folderProyect, branch) => {
 
     const pathDirectoryProd = path.join(__dirname, "..", folderProyect, branch);
 
