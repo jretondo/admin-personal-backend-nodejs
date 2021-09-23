@@ -9,40 +9,56 @@ const gitPull = (folderPath) => {
         "--progress"
     ];
     const pull = spawnSync("git", args, { cwd: folderPath });
-    console.log("git pull:", `${pull.stderr}`);
+    if (pull.error) {
+        console.error(pull.error)
+    }
+    console.log("git pull:", `${pull.stdout}`);
 };
 
 //options: stop, start, purge, restart, build
 const npmFunct = (folderPath, options) => {
     const args = [
         "run",
-        options
+        options,
+        "--progress"
     ];
     const pull = spawnSync("npm", args, { cwd: folderPath });
-    console.log(`npm ${options}`, `${pull.stderr}`);
+    if (pull.error) {
+        console.error(pull.error)
+    }
+    console.log(`npm ${options}`, `${pull.stdout}`);
 }
 
-const npmInstall = (folderPath, options) => {
+const npmInstall = (folderPath) => {
     const args = [
         "install",
+        "--progress"
     ];
     const pull = spawnSync("npm", args, { cwd: folderPath });
-    console.log(`npm ${options}`, `${pull.stderr}`);
+    if (pull.error) {
+        console.error(pull.error)
+    }
+    console.log(`npm install`, `${pull.stdout}`);
 }
 
 const deployment = (folderProyect, branch) => {
 
-    const pathDirectoryProd = path.join(__dirname, "..", folderProyect, branch);
+    const pathDirectoryProd = path.join(__dirname, "..", "..", "..", "..", folderProyect);
 
     console.log(`pathDirectoryProd`, pathDirectoryProd);
 
-    gitPull(pathDirectoryProd);
-    npmInstall(pathDirectoryProd);
-    npmFunct(pathDirectoryProd, "stop");
-    npmFunct(pathDirectoryProd, "purge");
-    npmFunct(pathDirectoryProd, "build");
-    npmFunct(pathDirectoryProd, "start");
+    try {
+        gitPull(pathDirectoryProd);
+        npmInstall(pathDirectoryProd);
+        npmFunct(pathDirectoryProd, "stop");
+        npmFunct(pathDirectoryProd, "purge");
+        npmFunct(pathDirectoryProd, "build");
+        npmFunct(pathDirectoryProd, "start");
 
+        return "Todo Ok"
+    } catch (error) {
+        return error
+    }
 };
 
 module.exports = deployment
