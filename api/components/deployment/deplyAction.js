@@ -23,14 +23,15 @@ const npmFunct = (folderPath, options) => {
 }
 
 const deployment = async (folderProyect, branch) => {
-    return new Promise.all(() => {
-        const pathDirectoryProd = path.join(__dirname, "..", folderProyect, branch);
-        gitPull(pathDirectoryProd);
-        npmFunct(pathDirectoryProd, "stop");
-        npmFunct(pathDirectoryProd, "purge");
-        npmFunct(pathDirectoryProd, "build");
-        npmFunct(pathDirectoryProd, "start");
-    })
+
+    const pathDirectoryProd = path.join(__dirname, "..", folderProyect, branch);
+    gitPull(pathDirectoryProd);
+    npmFunct(pathDirectoryProd, "stop");
+    npmFunct(pathDirectoryProd, "purge");
+    npmFunct(pathDirectoryProd, "build");
+    npmFunct(pathDirectoryProd, "start");
+    return 'Todo Ok'
+
 };
 
 module.exports = deployment

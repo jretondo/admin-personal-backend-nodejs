@@ -7,8 +7,8 @@ const Controller = require("./index")
 //internal Functions
 const getFolderDeploy = (req, res, next) => {
     Controller.deploy(req.body.folder, req.body.branch)
-        .then(() => {
-            response.success(req, res)
+        .then((respuesta) => {
+            response.success(req, res, 200, respuesta)
         })
         .catch(next)
 }
