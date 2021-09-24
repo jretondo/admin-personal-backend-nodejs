@@ -22,7 +22,7 @@ const npmFunct = (folderPath, options) => {
         opcionsStart = {
             cwd: folderPath,
             detached: true,
-            stdio: ['ignore', 'ignore', 'ignore']
+            stdio: ['pipe', 'pipe', 'pipe']
         }
     }
 
