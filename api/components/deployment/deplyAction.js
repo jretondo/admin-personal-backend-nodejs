@@ -21,9 +21,7 @@ const npmFunct = (folderPath, options) => {
     if (options === "start") {
         opcionsStart = {
             cwd: folderPath,
-            slient: true,
-            detached: true,
-            stdio: [null, null, null, 'ipc']
+            detached: true
         }
     }
 
@@ -32,7 +30,7 @@ const npmFunct = (folderPath, options) => {
         options,
         "--progress"
     ];
-    const pull = spawn("npm", args, { cwd: folderPath });
+    const pull = spawnSync("npm", args, opcionsStart);
     if (pull.error) {
         console.error(pull.error)
     }
