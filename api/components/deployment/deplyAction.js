@@ -61,10 +61,10 @@ const deployment = (folderProyect, branch) => {
     try {
         gitPull(pathDirectoryProd, rama);
         npmInstall(pathDirectoryProd);
-        npmFunct(pathDirectoryProd, "stop");
+        //npmFunct(pathDirectoryProd, "stop");
         npmFunct(pathDirectoryProd, "purge");
         npmFunct(pathDirectoryProd, "build");
-        npmFunct(pathDirectoryProd, "start");
+        npmFunct(pathDirectoryProd, "restart");
         pm2Save();
 
         return "Todo Ok"
