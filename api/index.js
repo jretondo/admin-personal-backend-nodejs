@@ -47,7 +47,7 @@ if (config.machine.type === "LOCAL") {
         key: fs.readFileSync(path.join(__dirname, "..", "..", "..", "nekoadmin.key"), 'utf8'),
         cert: fs.readFileSync(path.join(__dirname, "..", "..", "..", "nekoadmin.crt"), 'utf8')
     };
-    https.createServer(options, app).listen(onfig.api.port, function () {
+    https.createServer(options, app).listen(config.api.port, function () {
         console.log(`Conectado al puerto seguro ${config.api.port}`)
     });
 }
