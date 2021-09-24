@@ -22,7 +22,7 @@ const npmFunct = (folderPath, options) => {
         opcionsStart = {
             cwd: folderPath,
             detached: true,
-            stdio: ['pipe', 'pipe', 'pipe']
+            stdio: ['pipe', process.stdout, process.stderr]
         }
     }
 
