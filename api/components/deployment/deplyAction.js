@@ -27,7 +27,7 @@ const npmFunct = (folderPath, options) => {
 
         const pull = spawn("npm", args, { cwd: folderPath });
         pull.stdout.on('data', (data) => {
-            console.log(`data`, data)
+            console.log(`npm ${options}`, `${pull.stdout}`);
         })
     } else {
         const pull = spawnSync("npm", args, { cwd: folderPath });
