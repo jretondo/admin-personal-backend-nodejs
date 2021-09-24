@@ -1,4 +1,4 @@
-const { spawnSync } = require('child_process');
+const { spawnSync, spawn } = require('child_process');
 const path = require('path');
 
 const gitPull = (folderPath, branch) => {
@@ -32,7 +32,7 @@ const npmFunct = (folderPath, options) => {
         options,
         "--progress"
     ];
-    const pull = spawnSync("npm", args, opcionsStart);
+    const pull = spawn("npm", args, { cwd: folderPath });
     if (pull.error) {
         console.error(pull.error)
     }
