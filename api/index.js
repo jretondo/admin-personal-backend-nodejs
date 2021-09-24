@@ -28,7 +28,7 @@ app.use('/api/routes', routes)
 app.use('/api/invoice', invoice)
 app.use('/api/deployment', deployment)
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
-app.use('/api', test)
+app.use('/api/test', test)
 
 app.use(errors)
 
