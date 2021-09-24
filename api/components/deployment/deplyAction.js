@@ -18,7 +18,7 @@ const gitPull = (folderPath, branch) => {
 //options: stop, start, purge, restart, build
 const npmFunct = (folderPath, options) => {
     let opcionsStart = { cwd: folderPath }
-    if (opcions === "start") {
+    if (options === "start") {
         opcionsStart = {
             cwd: folderPath,
             slient: true,
