@@ -21,13 +21,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //ROUTER
-app.use('/api', test)
+
 app.use('/api/user', user)
 app.use('/api/auth', auth)
 app.use('/api/routes', routes)
 app.use('/api/invoice', invoice)
 app.use('/api/deployment', deployment)
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
+app.use('/api', test)
 
 app.use(errors)
 
