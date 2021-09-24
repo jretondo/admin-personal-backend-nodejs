@@ -5,7 +5,7 @@
   "main": "api/index.js",
   "scripts": {
     "test": "nodemon api/index.js",
-    "start": "node api/index.js"
+    "start": "pm2 start api/index.js"
   },
   "keywords": [
     "node",
