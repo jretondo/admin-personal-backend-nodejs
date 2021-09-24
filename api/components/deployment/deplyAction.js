@@ -56,7 +56,9 @@ const deployment = (folderProyect, branch) => {
         npmFunct(pathDirectoryProd, "stop");
         npmFunct(pathDirectoryProd, "purge");
         npmFunct(pathDirectoryProd, "build");
-        npmFunct(pathDirectoryProd, "start");
+        setTimeout(() => {
+            npmFunct(pathDirectoryProd, "start");
+        }, 3000);
 
         return "Todo Ok"
     } catch (error) {
