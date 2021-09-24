@@ -17,25 +17,25 @@ const gitPull = (folderPath, branch) => {
 
 //options: stop, start, purge, restart, build
 const npmFunct = (folderPath, options) => {
-    let opcionsStart = { cwd: folderPath }
-    if (options === "start") {
-        opcionsStart = {
-            cwd: folderPath,
-            detached: true,
-            stdio: ['pipe', process.stdout, process.stderr]
-        }
-    }
-
     const args = [
         "run",
         options,
         "--progress"
     ];
-    const pull = spawnSync("npm", args, opcionsStart);
-    if (pull.error) {
-        console.error(pull.error)
+
+    if (options === "start") {
+
+        const pull = spawn("npm", args, { cwd: folderPath });
+        pull.stdout.on('data', (data) => {
+            console.log(`data`, data)
+        })
+    } else {
+        const pull = spawnSync("npm", args, { cwd: folderPath });
+        if (pull.error) {
+            console.error(pull.error)
+        }
+        console.log(`npm ${options}`, `${pull.stdout}`);
     }
-    console.log(`npm ${options}`, `${pull.stdout}`);
 }
 
 const npmInstall = (folderPath) => {
