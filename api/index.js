@@ -35,3 +35,17 @@ app.use(errors)
 app.listen(config.api.port, () => {
     console.log(`Conectado al puesto ${config.api.port}`)
 })
+
+if (config.machine.type === "LOCAL") {
+    app.listen(config.api.port, () => {
+        console.log(`Conectado al puerto ${config.api.port}`)
+    })
+} else {
+    var options = {
+        key: fs.readFileSync(path.join(__dirname, "..", "..", "..", "nekoadmin.key"), 'utf8'),
+        cert: fs.readFileSync(path.join(__dirname, "..", "..", "..", "nekoadmin.crt"), 'utf8')
+    };
+    https.createServer(options, app).listen(onfig.api.port, function () {
+        console.log(`Conectado al puerto seguro ${config.api.port}`)
+    });
+}
