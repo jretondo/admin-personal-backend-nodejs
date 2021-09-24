@@ -34,10 +34,6 @@ app.use('/api/test', test)
 
 app.use(errors)
 
-app.listen(config.api.port, () => {
-    console.log(`Conectado al puesto ${config.api.port}`)
-})
-
 if (config.machine.type === "LOCAL") {
     app.listen(config.api.port, () => {
         console.log(`Conectado al puerto ${config.api.port}`)
