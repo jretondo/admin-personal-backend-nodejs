@@ -15,6 +15,19 @@ const gitPull = (folderPath, branch) => {
     console.log("git pull:", `${pull.stdout}`);
 };
 
+const pm2Save = (folderPath) => {
+    const args = [
+        "pm2",
+        "save",
+        "--progress"
+    ];
+    const pull = spawnSync("git", args, { cwd: folderPath });
+    if (pull.error) {
+        console.error(pull.error)
+    }
+    console.log("pm2 save:", `${pull.stdout}`);
+}
+
 //options: stop, start, purge, restart, build
 const npmFunct = (folderPath, options) => {
     const args = [
@@ -56,9 +69,8 @@ const deployment = (folderProyect, branch) => {
         npmFunct(pathDirectoryProd, "stop");
         npmFunct(pathDirectoryProd, "purge");
         npmFunct(pathDirectoryProd, "build");
-        setTimeout(() => {
-            npmFunct(pathDirectoryProd, "start");
-        }, 3000);
+        npmFunct(pathDirectoryProd, "start");
+        pm2Save();
 
         return "Todo Ok"
     } catch (error) {
