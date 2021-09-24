@@ -21,7 +21,7 @@ const npmFunct = (folderPath, options) => {
     if (options === "start") {
         opcionsStart = {
             cwd: folderPath,
-            detached: true
+            detached: false
         }
     }
 
