@@ -15,6 +15,31 @@ const gitPull = (folderPath, branch) => {
     console.log("git pull:", `${pull.stdout}`);
 };
 
+const gitStash = (folderPath) => {
+    const args = [
+        "stash",
+        "--progress"
+    ];
+    const pull = spawnSync("git", args, { cwd: folderPath });
+    if (pull.error) {
+        console.error(pull.error)
+    }
+    console.log("git pull:", `${pull.stdout}`);
+};
+
+const gitStashDelete = (folderPath) => {
+    const args = [
+        "stash",
+        "drop",
+        "--progress"
+    ];
+    const pull = spawnSync("git", args, { cwd: folderPath });
+    if (pull.error) {
+        console.error(pull.error)
+    }
+    console.log("git pull:", `${pull.stdout}`);
+};
+
 //options: stop, start, purge, restart, build
 const npmFunct = (folderPath, options) => {
     let opcionsStart = { cwd: folderPath }
@@ -59,12 +84,14 @@ const deployment = (folderProyect, branch) => {
         rama = "dev"
     }
     try {
+        gitStash(pathDirectoryProd);
         gitPull(pathDirectoryProd, rama);
         npmInstall(pathDirectoryProd);
-        //npmFunct(pathDirectoryProd, "stop");
+        npmFunct(pathDirectoryProd, "stop");
         npmFunct(pathDirectoryProd, "purge");
         npmFunct(pathDirectoryProd, "build");
-        npmFunct(pathDirectoryProd, "restart");
+        npmFunct(pathDirectoryProd, "start");
+        gitStashDelete(pathDirectoryProd);
         pm2Save();
 
         return "Todo Ok"
