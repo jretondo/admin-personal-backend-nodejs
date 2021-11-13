@@ -44,14 +44,17 @@ module.exports = (injectedStore) => {
         })
     }
 
-    const getCert = (folder) => {
-        const documentos = path.join("etc", "letsencrypt", "live", folder, "fullchain.pem");
-        return fs.readFileSync(cert, { encoding: "utf8" });
-    }
+    const getCertKey = async (folder) => {
+        const documentos1 = path.join("etc", "letsencrypt", "live", folder, "fullchain.pem");
+        const documentos2 = path.join("etc", "letsencrypt", "live", folder, "privkey.pem");
 
-    const getKey = async (folder) => {
-        const documentos = path.join("etc", "letsencrypt", "live", folder, "privkey.pem");
-        return fs.readFileSync(cert, { encoding: "utf8" });
+        const cert = fs.readFileSync(documentos1, { encoding: "utf8" });
+        const key = fs.readFileSync(documentos2, { encoding: "utf8" });
+
+        return {
+            cert,
+            key
+        }
     }
 
     return {
@@ -59,7 +62,6 @@ module.exports = (injectedStore) => {
         get,
         deploy,
         getFolders,
-        getCert,
-        getKey
+        getCertKey
     }
 }

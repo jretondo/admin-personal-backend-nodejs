@@ -22,15 +22,7 @@ const getFolders = (req, res, next) => {
 }
 
 const getCert = (req, res, next) => {
-    Controller.getCert(req.query.folder)
-        .then((text) => {
-            response.success(req, res, 200, text)
-        })
-        .catch(next)
-}
-
-const getKey = (req, res, next) => {
-    Controller.getKey(req.query.folder)
+    Controller.getCertKey(req.query.folder)
         .then((text) => {
             response.success(req, res, 200, text)
         })
@@ -39,7 +31,6 @@ const getKey = (req, res, next) => {
 
 //Routes
 router.get("/cert/", secure(), getCert)
-router.get("/key/", secure(), getKey)
 router.get("/", secure(), getFolders)
 router.post("/", secure(), getFolderDeploy)
 
