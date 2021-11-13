@@ -27,19 +27,20 @@ module.exports = (injectedStore) => {
     const getFolders = async () => {
         const documentos = path.join("/etc/letsencrypt/live/");
         console.log(`documentos`, documentos);
-
-        exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
-            if (err) {
-                console.error(err)
-                return false
-            }
-            let foldArray = []
-            let folders = stdout.replace(/[/]/g, "");
-            folders = folders.split("\n");
-            foldArray = folders
-            foldArray.pop()
-            console.log(`foldArray`, foldArray)
-            return foldArray
+        return new Promise((resolve, reject) => {
+            exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
+                if (err) {
+                    console.error(err)
+                    return false
+                }
+                let foldArray = []
+                let folders = stdout.replace(/[/]/g, "");
+                folders = folders.split("\n");
+                foldArray = folders
+                foldArray.pop()
+                console.log(`foldArray`, foldArray)
+                resolve(foldArray)
+            })
         })
     }
 
