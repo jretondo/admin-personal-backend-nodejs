@@ -25,7 +25,7 @@ module.exports = (injectedStore) => {
     }
 
     const getFolders = async () => {
-        const documentos = path.join("/etc/letsencrypt/live/");
+        const documentos = path.join("etc", "letsencrypt", "live");
         console.log(`documentos`, documentos);
         return new Promise((resolve, reject) => {
             exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
@@ -44,10 +44,22 @@ module.exports = (injectedStore) => {
         })
     }
 
+    const getCert = (folder) => {
+        const documentos = path.join("etc", "letsencrypt", "live", folder, "fullchain.pem");
+        return fs.readFileSync(cert, { encoding: "utf8" });
+    }
+
+    const getKey = async (folder) => {
+        const documentos = path.join("etc", "letsencrypt", "live", folder, "privkey.pem");
+        return fs.readFileSync(cert, { encoding: "utf8" });
+    }
+
     return {
         list,
         get,
         deploy,
-        getFolders
+        getFolders,
+        getCert,
+        getKey
     }
 }

@@ -1,5 +1,16 @@
 const { spawnSync, spawn, exec } = require('child_process');
 const path = require('path');
+const fs = require('fs');
+
+const readCert = () => {
+    const cert = path.join(__dirname, "..", "..", "..", "..", "..", "..", "Proyectos", "Certificados", "fullchain.pem");
+
+    const certificate = fs.readFileSync(cert, { encoding: "utf8" });
+
+    console.log(certificate)
+}
+
+readCert()
 
 const getFolder = () => {
     const documentos = path.join(__dirname, "..", "..", "..", "..", "..", "..");
@@ -20,6 +31,8 @@ const getFolder = () => {
 }
 
 getFolder();
+
+
 
 const getFolders = () => {
     const documentos = path.join("/etc/letsencrypt/live/");
