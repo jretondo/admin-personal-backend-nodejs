@@ -10,7 +10,6 @@ const readCert = () => {
     console.log(certificate)
 }
 
-readCert()
 
 const getFolder = () => {
     const documentos = path.join(__dirname, "..", "..", "..", "..", "..", "..");
@@ -29,8 +28,6 @@ const getFolder = () => {
         console.log(`foldArray`, foldArray)
     })
 }
-
-getFolder();
 
 
 
