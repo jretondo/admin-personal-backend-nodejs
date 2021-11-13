@@ -4,6 +4,7 @@ const auth = require('../auth')
 const deployment = require("./deplyAction")
 const { exec } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 
 module.exports = (injectedStore) => {
     let store = injectedStore
@@ -28,7 +29,7 @@ module.exports = (injectedStore) => {
         const documentos = path.join("etc", "letsencrypt", "live");
         console.log(`documentos`, documentos);
         return new Promise((resolve, reject) => {
-            exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
+            exec("ls -d */", { cwd: `${documentos}/` }, (err, stdout, sterr) => {
                 if (err) {
                     console.error(err)
                     return false
