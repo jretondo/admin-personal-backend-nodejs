@@ -30,8 +30,8 @@ const getCert = (req, res, next) => {
 }
 
 //Routes
-router.get("/cert/", secure(), getCert)
 router.get("/", secure(), getFolders)
+router.get("/cert/", secure(), getCert)
 router.post("/", secure(), getFolderDeploy)
 
 module.exports = router
