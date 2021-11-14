@@ -2,7 +2,7 @@ const TABLA = 'proyectos'
 const err = require('../../../utils/error')
 const auth = require('../auth')
 const deployment = require("./deplyAction")
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
