@@ -28,7 +28,6 @@ module.exports = (injectedStore) => {
 
     const getFolders = async () => {
         const documentos = path.join("/etc/letsencrypt/live");
-        console.log(`documentos`, documentos);
         return new Promise((resolve, reject) => {
             exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
                 if (err) {
@@ -53,9 +52,8 @@ module.exports = (injectedStore) => {
                         pages.push({
                             folder: item,
                             vto,
-                            rowVto: new Date(vto)
+                            rawVto: new Date(vto)
                         })
-                        console.log(`pages`, pages)
                         if (key === foldArray.length - 1) {
                             resolve(pages)
                         }
