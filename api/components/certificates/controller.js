@@ -52,7 +52,7 @@ module.exports = (injectedStore) => {
                         pages.push({
                             folder: item,
                             vto,
-                            rawVto: new Date(vto)
+                            rawVto: new Date(stdout.replace("notAfter=", ""))
                         })
                         if (key === foldArray.length - 1) {
                             resolve(pages)
