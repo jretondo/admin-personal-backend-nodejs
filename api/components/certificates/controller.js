@@ -76,8 +76,8 @@ module.exports = (injectedStore) => {
 
     const renewCert = async (folder) => {
         const queryList = ` SELECT * FROM ${TABLA} WHERE folder = ? ORDER BY orden `
-        const lista = await store.customQuery(queryList, [folder])
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+            const lista = await store.customQuery(queryList, [folder])
             let strComand = "certbot certonly -n --force-renewal --webroot "
             lista.map((item, key) => {
                 strComand = strComand + `-w ${item.webroot} -d ${item.domain} -d www.${item.domain} `
