@@ -83,7 +83,14 @@ module.exports = (injectedStore) => {
                 strComand = strComand + `-w ${item.webroot} -d ${item.domain} -d www.${item.domain} `
                 if (key === (lista.length - 1)) {
                     console.log(`strComand`, strComand)
-                    resolve(strComand)
+                    const documentos3 = path.join("/etc/letsencrypt/live", folder);
+                    exec(strComand, { cwd: documentos3 }, (err, stdout, sterr) => {
+                        if (err) {
+                            console.error(err)
+                            return false
+                        }
+                        resolve(stdout)
+                    })
                 }
             })
         })
