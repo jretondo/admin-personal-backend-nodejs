@@ -52,7 +52,8 @@ module.exports = (injectedStore) => {
                         vto = moment(new Date(vto)).format("DD/MM/YYYY")
                         pages.push({
                             folder: item,
-                            vto
+                            vto,
+                            rowVto: new Date(vto)
                         })
                         console.log(`pages`, pages)
                         if (key === foldArray.length - 1) {
