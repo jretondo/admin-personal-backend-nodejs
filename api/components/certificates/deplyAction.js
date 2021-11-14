@@ -1,6 +1,9 @@
 const { spawnSync, spawn, exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const moment = require("moment")
+
+console.log(`object`, moment(new Date("Feb 11 16:23:41 2022 GMT")).format("DD/MM/YYYY"))
 
 const readCert = () => {
     const cert = path.join(__dirname, "..", "..", "..", "..", "..", "..", "Proyectos", "Certificados", "fullchain.pem");

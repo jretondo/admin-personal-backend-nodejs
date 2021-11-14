@@ -52,10 +52,19 @@ module.exports = (injectedStore) => {
         const cert = fs.readFileSync(documentos1, { encoding: "utf8" });
         const key = fs.readFileSync(documentos2, { encoding: "utf8" });
 
-        return {
-            cert,
-            key
-        }
+        exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos1 }, (err, stdout, sterr) => {
+            if (err) {
+                console.error(err)
+                return false
+            }
+            let vto = stdout.replace("notAfter=", "")
+            vto = moment(new Date(vto)).format("DD/MM/YYYY")
+            return {
+                cert,
+                key,
+                vto
+            }
+        })
     }
 
     return {
