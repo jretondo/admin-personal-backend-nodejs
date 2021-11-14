@@ -1,8 +1,6 @@
-const TABLA = 'proyectos'
+const TABLA = 'cert_webroot'
 const err = require('../../../utils/error')
-const auth = require('../auth')
-const deployment = require("./deplyAction")
-const { exec, spawn } = require('child_process');
+const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const moment = require("moment")
@@ -11,19 +9,6 @@ module.exports = (injectedStore) => {
     let store = injectedStore
     if (!store) {
         store = require('../../../store/dummy')
-    }
-    const list = () => {
-        return store.list(TABLA)
-    }
-
-    const get = (id) => {
-        return store.get(TABLA, id)
-    }
-
-    const deploy = async (folderProyect, branch) => {
-        return new Promise((resolve, reject) => {
-            resolve(deployment(folderProyect, branch))
-        })
     }
 
     const getFolders = async () => {
@@ -86,16 +71,27 @@ module.exports = (injectedStore) => {
                     vto
                 })
             })
-
         })
+    }
 
+    const renewCert = async (folder) => {
+        const queryList = ` SELECT * FROM ${TABLA} WHERE folder = ? ORDER BY orden `
+        const lista = await store.customQuery(queryList, [folder])
+        new Promise((resolve, reject) => {
+            let strComand = "certbot certonly -n --force-renewal --webroot "
+            lista.map((item, key) => {
+                strComand = strComand + `-w ${item.webroot} -d ${item.domain} -d www.${item.domain} `
+                if (key === (lista.length - 1)) {
+                    console.log(`strComand`, strComand)
+                    resolve(strComand)
+                }
+            })
+        })
     }
 
     return {
-        list,
-        get,
-        deploy,
         getFolders,
-        getCertKey
+        getCertKey,
+        renewCert
     }
 }
