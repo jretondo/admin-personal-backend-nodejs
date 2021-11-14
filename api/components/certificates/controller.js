@@ -49,10 +49,12 @@ module.exports = (injectedStore) => {
         const documentos1 = path.join("/etc/letsencrypt/live", folder, "fullchain.pem");
         const documentos2 = path.join("/etc/letsencrypt/live", folder, "privkey.pem");
 
+        const documentos3 = path.join("/etc/letsencrypt/live", folder);
+
         const cert = fs.readFileSync(documentos1, { encoding: "utf8" });
         const key = fs.readFileSync(documentos2, { encoding: "utf8" });
 
-        exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos1 }, (err, stdout, sterr) => {
+        exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos3 }, (err, stdout, sterr) => {
             if (err) {
                 console.error(err)
                 return false
