@@ -43,23 +43,22 @@ module.exports = (injectedStore) => {
                 let pages = []
                 foldArray.map((item, key) => {
                     const documentos3 = path.join("/etc/letsencrypt/live", item);
-                    const vencimiento = exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos3 }, (err, stdout, sterr) => {
+                    exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos3 }, (err, stdout, sterr) => {
                         if (err) {
                             console.error(err)
                             return false
                         }
                         let vto = stdout.replace("notAfter=", "")
                         vto = moment(new Date(vto)).format("DD/MM/YYYY")
-                        return vto
+                        pages.push({
+                            folder: item,
+                            vto
+                        })
+                        console.log(`pages`, pages)
+                        if (key === foldArray.length - 1) {
+                            resolve(pages)
+                        }
                     })
-                    pages.push({
-                        folder: item,
-                        vto: vencimiento
-                    })
-                    console.log(`pages`, pages)
-                    if (key === foldArray.length - 1) {
-                        resolve(pages)
-                    }
                 })
             })
         })
