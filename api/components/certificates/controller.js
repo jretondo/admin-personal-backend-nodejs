@@ -47,27 +47,31 @@ module.exports = (injectedStore) => {
     }
 
     const getCertKey = async (folder) => {
-        const documentos1 = path.join("/etc/letsencrypt/live", folder, "fullchain.pem");
-        const documentos2 = path.join("/etc/letsencrypt/live", folder, "privkey.pem");
+        return new Promise((resolve, reject) => {
+            const documentos1 = path.join("/etc/letsencrypt/live", folder, "fullchain.pem");
+            const documentos2 = path.join("/etc/letsencrypt/live", folder, "privkey.pem");
 
-        const documentos3 = path.join("/etc/letsencrypt/live", folder);
+            const documentos3 = path.join("/etc/letsencrypt/live", folder);
 
-        const cert = fs.readFileSync(documentos1, { encoding: "utf8" });
-        const key = fs.readFileSync(documentos2, { encoding: "utf8" });
+            const cert = fs.readFileSync(documentos1, { encoding: "utf8" });
+            const key = fs.readFileSync(documentos2, { encoding: "utf8" });
 
-        exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos3 }, (err, stdout, sterr) => {
-            if (err) {
-                console.error(err)
-                return false
-            }
-            let vto = stdout.replace("notAfter=", "")
-            vto = moment(new Date(vto)).format("DD/MM/YYYY")
-            return {
-                cert,
-                key,
-                vto
-            }
+            exec(`cat fullchain.pem | openssl x509 -noout -enddate`, { cwd: documentos3 }, (err, stdout, sterr) => {
+                if (err) {
+                    console.error(err)
+                    return false
+                }
+                let vto = stdout.replace("notAfter=", "")
+                vto = moment(new Date(vto)).format("DD/MM/YYYY")
+                resolve({
+                    cert,
+                    key,
+                    vto
+                })
+            })
+
         })
+
     }
 
     return {
