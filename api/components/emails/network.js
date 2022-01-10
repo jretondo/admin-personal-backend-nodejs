@@ -13,6 +13,6 @@ const sendEmail = (req, res, next) => {
 }
 
 //Routes
-router.get("/", sendEmail)
+router.post("/", sendEmail)
 
 module.exports = router
