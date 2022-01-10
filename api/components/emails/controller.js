@@ -12,7 +12,7 @@ module.exports = (injectedStore) => {
         const message = body.message
         const mensaje = `
         Quieren contactarse contigo a través de la página Web!
-        Email: ${email}
+        Email: <a href="mailto:${email}">${email}</a>
         Mensaje: ${message}
         `
         await envioEmail("jretondo@nekonet.com.ar", "Contacto Web", mensaje)
