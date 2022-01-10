@@ -5,7 +5,7 @@ const Controller = require("./index")
 
 //internal Functions
 const sendEmail = (req, res, next) => {
-    Controller.sendEmail(req.query.body)
+    Controller.sendEmail(req.body)
         .then((text) => {
             response.success(req, res, 200, text)
         })
