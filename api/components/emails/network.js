@@ -5,7 +5,7 @@ const response = require("../../../network/response")
 
 //internal Functions
 const sendEmail = (req, res, next) => {
-    Controller.sendEmail(req.query.folder)
+    Controller.sendEmail(req.query.body)
         .then((text) => {
             response.success(req, res, 200, text)
         })
