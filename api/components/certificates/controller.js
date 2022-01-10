@@ -97,7 +97,7 @@ module.exports = (injectedStore) => {
 
     const allRenew = async () => {
         const documentos = path.join("/etc/letsencrypt/live");
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
                 if (err) {
                     console.error(err)
@@ -108,7 +108,7 @@ module.exports = (injectedStore) => {
                 folders = folders.split("\n");
                 foldArray = folders
                 foldArray.pop()
-                foldArray.map((item1, key1) => {
+                foldArray.map(async (item1, key1) => {
                     const queryList = ` SELECT * FROM ${TABLA} WHERE folder = ? ORDER BY orden `
                     const lista = await store.customQuery(queryList, [item1])
                     return new Promise((resolve, reject) => {

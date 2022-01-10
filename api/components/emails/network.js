@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const secure = require('./secure')
 const response = require("../../../network/response")
 
 //internal Functions
