@@ -1,5 +1,4 @@
 const TABLA = 'cert_webroot'
-const err = require('../../../utils/error')
 const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -96,9 +95,50 @@ module.exports = (injectedStore) => {
         })
     }
 
+    const allRenew = async () => {
+        const documentos = path.join("/etc/letsencrypt/live");
+        return new Promise((resolve, reject) => {
+            exec("ls -d */", { cwd: documentos }, (err, stdout, sterr) => {
+                if (err) {
+                    console.error(err)
+                    return false
+                }
+                let foldArray = []
+                let folders = stdout.replace(/[/]/g, "");
+                folders = folders.split("\n");
+                foldArray = folders
+                foldArray.pop()
+                foldArray.map((item1, key1) => {
+                    const queryList = ` SELECT * FROM ${TABLA} WHERE folder = ? ORDER BY orden `
+                    const lista = await store.customQuery(queryList, [item1])
+                    return new Promise((resolve, reject) => {
+                        let strComand = "certbot certonly -n --force-renewal --webroot "
+                        lista.map((item, key) => {
+                            strComand = strComand + `-w ${item.webroot} -d ${item.domain} -d www.${item.domain} `
+                            if (key === (lista.length - 1)) {
+                                console.log(`strComand`, strComand)
+                                const documentos3 = path.join("/etc/letsencrypt/live", item);
+                                exec(strComand, { cwd: documentos3 }, (err, stdout, sterr) => {
+                                    if (err) {
+                                        console.error(err)
+                                        return false
+                                    }
+                                    if (key1 === (foldArray.length - 1)) {
+                                        resolve(stdout)
+                                    }
+                                })
+                            }
+                        })
+                    })
+                })
+            })
+        })
+    }
+
     return {
         getFolders,
         getCertKey,
-        renewCert
+        renewCert,
+        allRenew
     }
 }

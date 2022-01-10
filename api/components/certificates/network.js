@@ -29,9 +29,18 @@ const renewCert = (req, res, next) => {
         .catch(next)
 }
 
+const renewsAllCert = () => {
+    Controller.allRenew()
+        .then((text) => {
+            response.success(req, res, 200, text)
+        })
+        .catch(next)
+}
+
 //Routes
 router.get("/cert/", secure(), getCert)
 router.get("/renew/", secure(), renewCert)
+router.get("/allRenew/", secure(), renewsAllCert)
 router.get("/", secure(), getFolders)
 
 module.exports = router
