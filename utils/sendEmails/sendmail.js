@@ -3,17 +3,17 @@ const { config } = require('../../config');
 
 const sendEmail = async (recepter, subject, msg) => {
     const tranporter = nodemailer.createTransport({
-        host: config.sendmail.host,
-        port: config.sendmail.port,
-        secure: config.sendmail.secure,
+        host: config.email.host,
+        port: 465,
+        secure: true,
         auth: {
-            user: config.sendmail.auth.user,
-            pass: config.sendmail.auth.pass
+            user: config.email.sender_email,
+            pass: config.email.pass
         }
     })
 
     return await tranporter.sendMail({
-        from: config.sendmail.from,
+        from: config.email.sender_name,
         to: recepter,
         subject: subject,
         html: msg
