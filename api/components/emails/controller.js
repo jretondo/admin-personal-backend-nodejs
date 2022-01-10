@@ -19,7 +19,8 @@ module.exports = (injectedStore) => {
             .then(() => {
                 return ""
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log(`error`, error)
                 throw "Error"
             })
     }
