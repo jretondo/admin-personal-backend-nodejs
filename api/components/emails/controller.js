@@ -7,6 +7,7 @@ module.exports = (injectedStore) => {
     }
 
     const sendEmail = async (body) => {
+        console.log(`body`, body)
         const email = body.email
         const message = body.message
         const mensaje = `
