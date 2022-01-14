@@ -14,6 +14,6 @@ const newVisit = (req, res, next) => {
 }
 
 //Routes
-router.post("/", secure(), newVisit)
+router.post("/", newVisit)
 
 module.exports = router
