@@ -3,9 +3,10 @@ const router = express.Router()
 const response = require("../../../network/response")
 const Controller = require("./index")
 const secure = require('./secure')
+
 //internal Functions
-const sendEmail = (req, res, next) => {
-    Controller.sendEmail(req.body)
+const newVisit = (req, res, next) => {
+    Controller.newVisit(req)
         .then((text) => {
             response.success(req, res, 200, text)
         })
@@ -13,6 +14,6 @@ const sendEmail = (req, res, next) => {
 }
 
 //Routes
-router.post("/", secure(), sendEmail)
+router.post("/", secure(), newVisit)
 
 module.exports = router

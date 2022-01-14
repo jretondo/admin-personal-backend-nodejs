@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const config = require('../../config');
 
 const sendEmail = async (recepter, subject, msg) => {
-    console.log(`config`, config)
     const tranporter = nodemailer.createTransport({
         host: config.email.host,
         port: 465,
