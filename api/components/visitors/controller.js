@@ -10,6 +10,7 @@ module.exports = (injectedStore) => {
     const newVisit = async (req) => {
         if (req.body.dataVisitor) {
             const dataVisitor = req.body.dataVisitor
+            console.log(`dataVisitor`, dataVisitor)
             let ip = req.headers['x-forwarded-for'] ||
                 req.socket.remoteAddress
             if (ip === "::ffff:127.0.0.1") {
@@ -32,8 +33,6 @@ module.exports = (injectedStore) => {
             } catch (error) {
                 console.log(`error`, error)
             }
-
-            console.log(`dataIp`, dataIp)
             const data = {
                 ip,
                 host: dataIp.host,
