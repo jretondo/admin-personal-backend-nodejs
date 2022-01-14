@@ -31,6 +31,8 @@ module.exports = (injectedStore) => {
             } catch (error) {
                 console.log(`error`, error)
             }
+
+            console.log(`dataVisitor.device`, dataVisitor.device)
             const data = {
                 ip,
                 host: dataIp.host,
