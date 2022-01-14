@@ -45,8 +45,9 @@ module.exports = (injectedStore) => {
                 longitude: dataIp.longitude,
                 browser: dataVisitor.browser.name,
                 os: dataVisitor.os.name,
-                device: `${dataVisitor.device.vendor} ${dataVisitor.device.model}`,
-                type: dataVisitor.device.type
+                device: dataVisitor.device.model,
+                type: dataVisitor.device.type,
+                brand: dataVisitor.device.vendor
             }
             await store.insert(TABLA, data)
             return ""
