@@ -10,7 +10,6 @@ module.exports = (injectedStore) => {
     const newVisit = async (req) => {
         if (req.body.dataVisitor) {
             const dataVisitor = req.body.dataVisitor
-            console.log(`dataVisitor`, dataVisitor)
             let ip = req.headers['x-forwarded-for'] ||
                 req.socket.remoteAddress
             if (ip === "::ffff:127.0.0.1") {
@@ -28,7 +27,6 @@ module.exports = (injectedStore) => {
             }
             try {
                 dataIp = await useDataIp(ip)
-                console.log(`data`, dataIp)
                 dataIp = dataIp.data.geo
             } catch (error) {
                 console.log(`error`, error)
@@ -45,7 +43,8 @@ module.exports = (injectedStore) => {
                 longitude: dataIp.longitude,
                 browser: dataVisitor.browser.name,
                 os: dataVisitor.os.name,
-                device: dataVisitor.device.name
+                device: `${dataVisitor.device.vendor} ${dataVisitor.device.model}`,
+                type: dataVisitor.device.type
             }
             await store.insert(TABLA, data)
             return ""
