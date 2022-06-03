@@ -48,6 +48,18 @@ const list = (table) => {
     })
 }
 
+const listAdds = (table, adds) => {
+    return new Promise((resolve, reject) => {
+        connection.query(` SELECT * FROM ${table} ${adds} `, (err, data) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(data)
+            }
+        })
+    })
+}
+
 const get = (table, id) => {
     return new Promise((resolve, reject) => {
         connection.query(` SELECT * FROM ${table} WHERE id = '${id}' `, (err, data) => {
@@ -126,6 +138,7 @@ const customQuery = (query, data) => {
 
 module.exports = {
     list,
+    listAdds,
     get,
     insert,
     update,
