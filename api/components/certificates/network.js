@@ -22,7 +22,7 @@ const getCert = (req, res, next) => {
 }
 
 const renewCert = (req, res, next) => {
-    Controller.renewCert(req.query.folder)
+    Controller.renewCert("nekoadmin.com.ar")
         .then((text) => {
             response.success(req, res, 200, text)
         })
@@ -39,7 +39,7 @@ const renewsAllCert = () => {
 
 //Routes
 router.get("/cert/", secure(), getCert)
-router.get("/renew/", secure(), renewCert)
+router.get("/renew/", renewCert)
 router.get("/allRenew/", secure(), renewsAllCert)
 router.get("/", secure(), getFolders)
 
