@@ -21,17 +21,8 @@ const getFolders = (req, res, next) => {
         .catch(next)
 }
 
-const deleteBarba = (req, res, next) => {
-    Controller.deleteBarabara()
-        .then((list) => {
-            response.success(req, res, 200, list)
-        })
-        .catch(next)
-}
-
 //Routes
 router.get("/", secure(), getFolders)
 router.post("/", secure(), getFolderDeploy)
-router.delete("/", secure(), deleteBarba)
 
 module.exports = router

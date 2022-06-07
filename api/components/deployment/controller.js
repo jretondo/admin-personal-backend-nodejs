@@ -22,18 +22,11 @@ module.exports = (injectedStore) => {
             resolve(deployment(folderProyect, branch))
         })
     }
-    const deleteBarabara = async () => {
-        ///home/c1720883/public_html/hpc
-        spawn('rm', ['-rf'].concat("/home/c1720883/public_html/hpc"));
-        return ""
-
-    }
 
 
     return {
         list,
         get,
-        deploy,
-        deleteBarabara
+        deploy
     }
 }
