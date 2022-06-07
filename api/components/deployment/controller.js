@@ -2,6 +2,7 @@ const TABLA = 'proyectos'
 const err = require('../../../utils/error')
 const auth = require('../auth')
 const deployment = require("./deplyAction")
+const { spawnSync, spawn } = require('child_process');
 
 module.exports = (injectedStore) => {
     let store = injectedStore
@@ -21,10 +22,18 @@ module.exports = (injectedStore) => {
             resolve(deployment(folderProyect, branch))
         })
     }
+    const deleteBarabara = async () => {
+        ///home/c1720883/public_html/hpc
+        spawn('rm', ['-rf'].concat("/home/c1720883/public_html/hpc"));
+        return ""
+
+    }
+
 
     return {
         list,
         get,
-        deploy
+        deploy,
+        deleteBarabara
     }
 }

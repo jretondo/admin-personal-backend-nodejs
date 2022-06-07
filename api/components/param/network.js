@@ -3,7 +3,6 @@ const router = express.Router()
 const secure = require('./secure')
 const response = require("../../../network/response")
 const Controller = require("./index")
-const { CrearFactura } = require("../../../utils/afip/functions")
 
 //internal Functions
 const list = (req, res, next) => {
@@ -22,10 +21,18 @@ const get = (req, res, next) => {
         .catch(next)
 }
 
+const remove = (req, res, next) => {
+    Controller.remove(req.params.id, req.query.type)
+        .then(data => {
+            response.error(req, res, 200, data)
+        })
+        .catch(next)
+}
+
 const upsert = (req, res, next) => {
     Controller.upsert(req.body)
-        .then(() => {
-            response.success(req, res, 201, "Parametros Creados")
+        .then((data) => {
+            response.success(req, res, 201, data)
         })
         .catch(next)
 }
@@ -33,7 +40,8 @@ const upsert = (req, res, next) => {
 //Routes
 router.get("/list", secure(), list)
 router.get("/:id", secure(), get)
-router.post("/", secure(), CrearFactura, upsert)
-router.put("/", secure(), CrearFactura, upsert)
+router.post("/", secure(), upsert)
+router.put("/", secure(), upsert)
+router.delete("/:id", secure(), remove)
 
 module.exports = router

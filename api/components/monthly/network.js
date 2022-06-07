@@ -33,7 +33,7 @@ const upsert = (req, res, next) => {
 //Routes
 router.get("/list/:page", secure(), list)
 router.get("/:id", secure(), get)
-router.post("/", secure(), CrearFactura, upsert)
-router.put("/", secure(), CrearFactura, upsert)
+router.post("/", secure(), upsert)
+router.put("/", secure(), upsert)
 
 module.exports = router

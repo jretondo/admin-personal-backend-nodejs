@@ -6,50 +6,61 @@ module.exports = (injectedStore) => {
     if (!store) {
         store = require('../../../store/dummy')
     }
-    const list = (type, all) => {
+    const list = async (type, all) => {
         let whereString = `enabled = 1`
         if (all) {
             whereString = ""
         }
 
-        if (parseInt(type) === 0) {
-            return store.listAdds(TABLE_GROUP)
-        } else if (parseInt(type) === 1) {
-            return store.listAdds(TABLE_CONCEPT)
+        if (parseInt(type) === 1) {
+            return await store.listAdds(TABLE_GROUP)
+        } else if (parseInt(type) === 0) {
+            const join = `INNER JOIN ${TABLE_CONCEPT} ON ${TABLE_GROUP}.id = ${TABLE_CONCEPT}.group_id GROUP BY concept`
+            return await store.listAdds(TABLE_GROUP, join)
         }
     }
 
-    const get = (id, type) => {
-        if (parseInt(type) === 0) {
-            return store.get(TABLE_GROUP, id)
-        } else if (parseInt(type) === 1) {
-            return store.get(TABLE_CONCEPT, id)
+    const get = async (id, type) => {
+        if (parseInt(type) === 1) {
+            return await store.get(TABLE_GROUP, id)
+        } else if (parseInt(type) === 0) {
+            return await store.get(TABLE_CONCEPT, id)
+        }
+    }
+
+    const remove = async (id, type) => {
+        if (parseInt(type) === 1) {
+            return await store.remove(TABLE_GROUP, { id: id })
+        } else if (parseInt(type) === 0) {
+            return await store.remove(TABLE_CONCEPT, { id: id })
         }
     }
 
     const upsert = async (body) => {
         const type = body.type
-        if (parseInt(type) === 0) {
+        if (parseInt(type) === 1) {
             const newGroup = {
-                group: body.name
+                group: body.name,
+                enabled: true
             }
             if (body.id) {
                 newGroup.id = body.id
-                return store.update(TABLE_GROUP, newGroup)
+                return await store.update(TABLE_GROUP, newGroup)
             } else {
-                return store.insert(TABLE_GROUP, newGroup)
+                return await store.insert(TABLE_GROUP, newGroup)
             }
 
-        } else if (parseInt(type) === 1) {
+        } else if (parseInt(type) === 0) {
             const newConcept = {
                 concept: body.name,
-                group_id: body.group
+                group_id: body.group,
+                enabled: true
             }
             if (body.id) {
                 newConcept.id = body.id
-                return store.update(TABLE_CONCEPT, newConcept)
+                return await store.update(TABLE_CONCEPT, newConcept)
             } else {
-                return store.insert(TABLE_CONCEPT, newConcept)
+                return await store.insert(TABLE_CONCEPT, newConcept)
             }
         }
     }
@@ -57,6 +68,7 @@ module.exports = (injectedStore) => {
     return {
         list,
         get,
-        upsert
+        upsert,
+        remove
     }
 }
